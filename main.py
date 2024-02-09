@@ -1,4 +1,5 @@
 import random
+import os
 
 def create_deck():
     suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
@@ -24,9 +25,11 @@ def calculate_hand_value(hand):
 def play_again():
     play_again = input("Would you like to play again? Y/N: ").upper()
     if play_again == "Y":
+        os.system("clear")
         play_blackjack()
     if play_again == "N":
         print("Thanks for playing!")
+        os.system("clear")
 
 def play_blackjack():
     deck = create_deck()
@@ -34,10 +37,12 @@ def play_blackjack():
     dealer_hand = [deal_card(deck), deal_card(deck)]
     
     while True:
+        print("----------------------------------------")
         print(f"Your hand has a value of: {calculate_hand_value(player_hand)}")
         print(f"The Dealer's hand has a value of {calculate_hand_value(dealer_hand)}")
+        print("----------------------------------------")
         if calculate_hand_value(player_hand) > 21:
-            print("Player busts! Dealer wins.")
+            print("*** Player busts! Dealer wins. ***")
             play_again()
             break
         action = input("Do you want to hit? Y/N: ").upper()
@@ -51,13 +56,13 @@ def play_blackjack():
             dealer_hand.append(deal_card(deck))
         print(f"The Dealer's hand has a value of {calculate_hand_value(dealer_hand)}")
         if calculate_hand_value(dealer_hand) > 21 or calculate_hand_value(player_hand) > calculate_hand_value(dealer_hand):
-            print("Player wins!")
+            print("*** Player wins! ***")
             play_again()
         elif calculate_hand_value(player_hand) < calculate_hand_value(dealer_hand):
-            print("Dealer wins!")
+            print("*** Dealer wins! ***")
             play_again()
         else:
-            print("It's a tie!")
+            print("*** It's a tie! ***")
             play_again()
 
 if __name__ == "__main__":
